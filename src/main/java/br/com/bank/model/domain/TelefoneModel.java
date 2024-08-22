@@ -1,5 +1,6 @@
 package br.com.bank.model.domain;
 
+import br.com.bank.model.form.TelefoneForm;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,11 +20,11 @@ public class TelefoneModel {
     private String ddd;
     private String isoCode;
 
-    public static TelefoneModel valueOf(String numero, String ddd, String isoCode) {
+    public static TelefoneModel valueOf (TelefoneForm telefoneForm) {
         TelefoneModel model = new TelefoneModel();
-        model.setNumero(numero);
-        model.setDdd(ddd);
-        model.setIsoCode(isoCode);
+        model.setNumero(telefoneForm.numero());
+        model.setDdd(telefoneForm.ddd());
+        model.setIsoCode(telefoneForm.isoCode());
         return model;
     }
 

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record UsuarioForm(@NotNull(message = "O CPF é obrigatório.")
-                          @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato 123.456.789-00")
+                          @Pattern(regexp = "^\\d{11}$", message = "CPF deve ter apenas numeros")
                           String cpf,
 
                           @NotNull(message = "O nome é obrigatório.")

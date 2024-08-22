@@ -1,8 +1,8 @@
 package br.com.bank.controller;
 
-import br.com.bank.model.dto.UserWSDTO;
+import br.com.bank.facade.UsuarioFacade;
+import br.com.bank.model.dto.UsuarioWSDTO;
 import br.com.bank.model.form.UsuarioForm;
-import br.com.bank.service.UserService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,19 +20,19 @@ public class UserController {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private final UserService userService;
+    private final UsuarioFacade usuarioFacade;
 
-    public UserController (final UserService userService) {this.userService = userService;}
+    public UserController (final UsuarioFacade usuarioFacade) {this.usuarioFacade = usuarioFacade;}
 
-    @GetMapping
-    public ResponseEntity<UserWSDTO> buscarUsuario (@PathVariable() String cpf) {
+    @GetMapping("/{cpf}")
+    public ResponseEntity<UsuarioWSDTO> buscarUsuario (@PathVariable String cpf) {
 
-        return ResponseEntity.status(200).body(userService.buscarClientePorCpf(cpf));
+        return ResponseEntity.status(200).body(usuarioFacade.buscarClientePorCpf(cpf));
     }
 
     @PostMapping("/cadastro")
     public ResponseEntity cadastrarUsuario (@Valid @RequestBody UsuarioForm user) {
-        userService.criarUsuario(user);
+        usuarioFacade.criarUsuario(user);
         return ResponseEntity.status(200).build();
     }
 
