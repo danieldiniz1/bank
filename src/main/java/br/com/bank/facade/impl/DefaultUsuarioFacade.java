@@ -1,5 +1,6 @@
 package br.com.bank.facade.impl;
 
+import br.com.bank.exception.UserUnactiveException;
 import br.com.bank.facade.UsuarioFacade;
 import br.com.bank.model.domain.EnderecoModel;
 import br.com.bank.model.domain.TelefoneModel;
@@ -10,6 +11,7 @@ import br.com.bank.model.dto.UsuarioWSDTO;
 import br.com.bank.model.form.EnderecoForm;
 import br.com.bank.model.form.TelefoneForm;
 import br.com.bank.model.form.UsuarioForm;
+import br.com.bank.model.form.UsuarioUpdateForm;
 import br.com.bank.service.EnderecoService;
 import br.com.bank.service.TelefoneService;
 import br.com.bank.service.UsuarioService;
@@ -39,7 +41,10 @@ public class DefaultUsuarioFacade implements UsuarioFacade {
     @Override
     public UsuarioWSDTO buscarClientePorCpf (final String cpf) {
 
-        return populateUser(usuarioService.buscarClientePorCpf(cpf));
+        final UsuarioModel usuarioModel = usuarioService.buscarUsuarioPorCpf(cpf);
+        if (Boolean.FALSE.equals(usuarioModel.getAtivo()))
+            throw new UserUnactiveException("Usuário Inativo");
+        return populateUser(usuarioModel);
     }
 
     @Override
@@ -53,9 +58,16 @@ public class DefaultUsuarioFacade implements UsuarioFacade {
 
     }
 
+
+    @Override
+    public void atualizarNomeUsuario (final UsuarioUpdateForm usuarioUpdateForm) {
+
+        usuarioService.ataulizarUsuario(usuarioUpdateForm.cpf(), usuarioUpdateForm.nome());
+    }
+
     @Override
     public void removerUsuario (final String cpf) {
-
+        usuarioService.removerUsuario(cpf);
     }
 
     private UsuarioWSDTO populateUser (final UsuarioModel user) {

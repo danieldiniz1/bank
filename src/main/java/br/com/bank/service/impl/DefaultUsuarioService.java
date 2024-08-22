@@ -17,7 +17,7 @@ public class DefaultUsuarioService implements UsuarioService {
     }
 
     @Override
-    public UsuarioModel buscarClientePorCpf (final String cpf) {
+    public UsuarioModel buscarUsuarioPorCpf (final String cpf) {
 
         return usuarioRepository.findByCpf(cpf).orElseThrow(() -> new ModelNotFoundException("Usuário não encontrado"));
     }
@@ -35,11 +35,17 @@ public class DefaultUsuarioService implements UsuarioService {
     @Override
     public void ataulizarUsuario (final String cpf, final String nome) {
 
+        final UsuarioModel usuarioModel = this.buscarUsuarioPorCpf(cpf);
+        usuarioModel.setNome(nome);
+        usuarioRepository.save(usuarioModel);
     }
 
     @Override
     public void removerUsuario (final String cpf) {
 
+        final UsuarioModel usuarioModel = this.buscarUsuarioPorCpf(cpf);
+        usuarioModel.setAtivo(Boolean.FALSE);
+        usuarioRepository.save(usuarioModel);
     }
 
 }

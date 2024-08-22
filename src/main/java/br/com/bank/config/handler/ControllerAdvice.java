@@ -3,6 +3,7 @@ package br.com.bank.config.handler;
 import br.com.bank.exception.ModelNotFoundException;
 import br.com.bank.exception.ModelSimpleSaveException;
 import br.com.bank.exception.UserExistsException;
+import br.com.bank.exception.UserUnactiveException;
 import br.com.bank.model.domain.StandardErrorModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,4 +39,8 @@ public class ControllerAdvice {
         return ResponseEntity.status(400).body(StandardErrorModel.valueOf(ex));
     }
 
+    @ExceptionHandler(UserUnactiveException.class)
+    public ResponseEntity<StandardErrorModel> userExcluded (UserUnactiveException ex) {
+        return ResponseEntity.status(400).body(StandardErrorModel.valueOf(ex));
+    }
 }
