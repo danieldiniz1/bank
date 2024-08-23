@@ -5,6 +5,7 @@ import br.com.bank.model.domain.EnderecoModel;
 import br.com.bank.model.form.EnderecoForm;
 import br.com.bank.repository.EnderecoRepository;
 import br.com.bank.service.EnderecoService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class DefaultEnderecoService implements EnderecoService {
     }
 
     @Override
+    @Transactional
     public EnderecoModel salvarEndereco (final EnderecoModel enderecoModel) {
 
         try {

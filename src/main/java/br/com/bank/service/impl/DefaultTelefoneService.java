@@ -4,6 +4,7 @@ import br.com.bank.exception.ModelSimpleSaveException;
 import br.com.bank.model.domain.TelefoneModel;
 import br.com.bank.repository.TelefoneRepository;
 import br.com.bank.service.TelefoneService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class DefaultTelefoneService implements TelefoneService {
     }
 
     @Override
+    @Transactional
     public TelefoneModel salvarTelefone (final TelefoneModel telefoneModel) {
         try {
             return telefoneRepository.save(telefoneModel);
