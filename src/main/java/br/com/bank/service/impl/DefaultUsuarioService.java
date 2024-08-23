@@ -4,6 +4,7 @@ import br.com.bank.exception.ModelNotFoundException;
 import br.com.bank.model.domain.UsuarioModel;
 import br.com.bank.repository.UsuarioRepository;
 import br.com.bank.service.UsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,7 @@ public class DefaultUsuarioService implements UsuarioService {
     }
 
     @Override
+    @Transactional
     public UsuarioModel criarUsuario (final UsuarioModel usuarioModel) {
 
         try {
